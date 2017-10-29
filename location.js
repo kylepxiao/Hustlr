@@ -57,15 +57,15 @@ function findOptimalPoint (pointList, center, tries, times) {
 	var bestVM = 1000000;
 	var bestPos = [0,0];
 
-	for (i = -10; i < 10; i+=0.01) {
-		for (j = -10; j < 10; j+=0.01) {
+	for (i = -5; i < 5; i+=0.01) {
+		for (j = -5; j < 5; j+=0.01) {
 			var validityMeasure = 0;
 
 			for (p = 0; p < pointList.length; p++) {
 				var x = pointList[p][0] - j;
 				var y = pointList[p][1] - i;
 
-				validityMeasure += (x*x + y*y);
+				validityMeasure += 1/(x*x + y*y);
 			}
 
 			if (validityMeasure < bestVM) {
