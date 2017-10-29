@@ -37,6 +37,8 @@ function addContent(contentToAdd, callback) {
     }, intervalTime);
 }
 
+document.getElementById("scroll").children[0].className += "load";
+
 function fadein(element) {
     var op = 0.05;  // initial opacity
     element.style.display = 'block';
@@ -50,7 +52,7 @@ function fadein(element) {
     }, 10);
 }
 
-scroll.style.opacity = 0;
+scroll.style.opacity = 1;
 
 setTimeout(function() {
     deleteContent(function() {
@@ -58,6 +60,7 @@ setTimeout(function() {
             deleteContent(function() {
                 addContent("with Hustlr", function() {
                     deleteContent(function() {
+                        addContent("Craft your Hustle today")
                     })
                 });
             });

@@ -1,10 +1,51 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import url('https://fonts.googleapis.com/css?family=Slabo+27px');
 
-html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,
+cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,
+ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,
+aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,
+summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
 body{
   line-height:1;
   color:#161616
+}
+button{
+    border: 2px solid white;
+    border-radius: 4px;
+    background-color: white;
+    color: #3399FF;
+    width: 300px;
+    font-size: 32px;
+    font-family: 'Bungee', cursive;
+    opacity: .8;
+}
+button:hover {
+    background-color: #3399FF; /* Green */
+    color: white;
+}
+#scroll button {
+    opacity: 0;
+    font-size: 21px;
+    margin-top: 25px;
+    text-align: center;
+
+    -webkit-transition: opacity 14s ease-in;
+       -moz-transition: opacity 14s ease-in;
+        -ms-transition: opacity 14s ease-in;
+         -o-transition: opacity 14s ease-in;
+            transition: opacity 14s ease-in;
+    animation: blinker 3s linear infinite;
+    animation-delay: 14s;
+}
+
+#scroll button.load {
+    opacity: 10;
+}
+img{
+  display: block;
+  margin: auto;
+  width: 50%;
 }
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{
   display:block
@@ -109,42 +150,9 @@ canvas{
   50% { opacity: 0;}
 }
 
-.navbar{
-  display: table;
-  position: fixed;
-  z-index: 999;
-  font-family: Consolas, monaco, monospace;
-  font-size: 2em;
-  text-decoration: none;
-  width: 100%;
-  margin: 0 auto;
-  text-align: right;
-  color: #1affb2;
-  background-color: #0a2929;
-}
-
-.navbar-list{
-  margin-top: 1em;
-  margin-right: 1em;
-  margin-bottom: 1em;
-}
-
-.navbar-element{
-  margin: 0 1em 0 0;
-  color: #ffffff;
-}
-
-.navbar-element:hover{
-  opacity: 0.5;
-}
-
-.navbar-element > a {
-  text-decoration: none;
-  color: inherit;
-}
-
 #scroll {
-  font-size: 0.7em;
+  font-size: 0.5em;
+  color: #fdfefe;
 }
 
 #info{
