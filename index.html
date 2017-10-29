@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
   <meta charset="utf-8">
   <title>Vis</title>
   <meta name="author" content="Hustlr Team" />
@@ -16,18 +17,19 @@
           <li class="navbar-element"><a href="mailto:kylepxiao@gmail.com">Contact</a></li>
         </ul>
       </nav> -->
-
 <!-- particles.js container -->
 <div id="particles-js">
   <div class="wrapper">
       <div id="title" class="header">
+        <div id="logo" style="position: absolute; top: 0; z-index: -99999999; left: 80px; right: 80px; top: 120px">
+          <img src="hustlr.png" style="width:150px;height:175px;">
+        </div>
         <span id="company_name">Hustlr</span>
         <span id="cursor">|</span><br/>
-        <span id="scroll">Scroll Down &#x25BC;</span>
+        <span id="scroll"><button id="fhustle" type="button" onclick="window.location.href='home.html'">Your next Hustle!</button></span>
       </div>
   </div>
 </div>
-
 <!-- scripts -->
 <script src="particles.min.js"></script>
 <script src="app.js"></script>
