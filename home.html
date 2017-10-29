@@ -9,6 +9,7 @@
   <link rel="stylesheet" media="screen" href="style.css">
   <meta name="viewport" content="initial-scale=1.0">
   <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <style>
     /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
@@ -85,19 +86,53 @@
 <div id="map"></div>
 <div id="option-menu">  
   <ul id="myUL">
-    <li><a href="#">Potential Competitors</a></li>
-    <li><a href="#">Optimal Location</a></li>
-    <li><a href="#">Relative Interest</a></li>
+    <li id="potential-competitors"><a href="#">Potential Competitors</a></li>
+    <li id="optimal-location"><a href="#">Optimal Location</a></li>
+    <li id="relative-interest"><a href="#">Relative Interest</a></li>
     <li><a href="#">Supply Recommendation</a></li>
     <li><a href="#">Contact/Info</a></li>
   </ul>
 </div>
 <script>
   var map;
+  var markersArray = [];
+  function clearOverlays() {
+    for (var i = 0; i < markersArray.length; i++ ) {
+      markersArray[i].setMap(null);
+    }
+    markersArray.length = 0;
+  };
   function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 42.54457119999999, lng: -76.5983802},
       zoom: 8
+    });
+    $(document).ready(function(){
+        $("#potential-competitors").click(function(){
+            clearOverlays();
+            $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
+                for(var i = 0; i < data["data"].length; i++) {
+                  var marker = new google.maps.Marker({
+                    position: {lat: data["data"][i].geocode.lat, lng: data["data"][i].geocode.lng},
+                    map: map,
+                    title: data["data"][i].name
+                  });
+                  markersArray.push(marker);
+                }
+            });
+        });
+        $("#optimal-location").click(function(){
+          clearOverlays();
+          var marker = new google.maps.Marker({
+            position: {lat: 42.54457119999999, lng: -76.5983802},
+            map: map,
+            title: 'Hello World!'
+          });
+          markersArray.push(marker);
+        });
+        $("#relative-interest").click(function(){
+          clearOverlays();
+        });
     });
   }
 </script>
