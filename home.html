@@ -142,20 +142,20 @@
   </div>
 <div class="btn-group" style="position: relative;left: 0px;bottom: 100px;" align="center">
   <ul style="position: absolute; left: 50%; margin-left: -37.5em; margin-top: -11em">
-    <li class="toggle" style="position: relative; display: inline;" ><button>Cafe</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Bakery</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Restaurant</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Food</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Store</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>P.O.I.</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Establishment</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Home Goods</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Tech</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Bar</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Grocery</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Liquor Store</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Department Store</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Electronics Store</button></li>
+    <li class="toggle" data="cafe" style="position: relative; display: inline;" ><button>Cafe</button></li>
+    <li class="toggle" data="bakery" style="position: relative; display: inline;"><button>Bakery</button></li>
+    <li class="toggle" data="restaurant" style="position: relative; display: inline;"><button>Restaurant</button></li>
+    <li class="toggle" data="food" style="position: relative; display: inline;"><button>Food</button></li>
+    <li class="toggle" data="store" style="position: relative; display: inline;"><button>Store</button></li>
+    <li class="toggle" data="points_of_interest" style="position: relative; display: inline;"><button>P.O.I.</button></li>
+    <li class="toggle" data="establishment" style="position: relative; display: inline;"><button>Establishment</button></li>
+    <li class="toggle" data="home_goods_store" style="position: relative; display: inline;"><button>Home Goods</button></li>
+    <li class="toggle" data="Tech" style="position: relative; display: inline;"><button>Tech</button></li>
+    <li class="toggle" data="bar" style="position: relative; display: inline;"><button>Bar</button></li>
+    <li class="toggle" data="grocery_or_supermarket" style="position: relative; display: inline;"><button>Grocery</button></li>
+    <li class="toggle" data="liquor_store" style="position: relative; display: inline;"><button>Liquor Store</button></li>
+    <li class="toggle" data="department_store" style="position: relative; display: inline;"><button>Department Store</button></li>
+    <li class="toggle" data="electronics_store" style="position: relative; display: inline;"><button>Electronics Store</button></li>
   </ul>
 </div>
 <script>
@@ -196,14 +196,21 @@ $('.toggle').click(function () {
   $(document).ready(function(){
       $("#potential-competitors").click(function(){
           clearOverlays();
+          var raw = document.getElementsByClassName("toggle active");
+          var tags = [];
+          for(var i = 0; i < raw.length; i++) {
+            tags.push(raw[i].getAttribute("data"));
+          }
           $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
               for(var i = 0; i < data["data"].length; i++) {
-                var marker = new google.maps.Marker({
-                  position: {lat: data["data"][i].geocode.lat, lng: data["data"][i].geocode.lng},
-                  map: map,
-                  title: data["data"][i].name
-                });
-                markersArray.push(marker);
+                if(getMatch(tags, data["data"][i].category).length > 0) {
+                  var marker = new google.maps.Marker({
+                    position: {lat: data["data"][i].geocode.lat, lng: data["data"][i].geocode.lng},
+                    map: map,
+                    title: data["data"][i].name
+                  });
+                  markersArray.push(marker);
+                }
               }
           });
       });
