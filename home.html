@@ -89,13 +89,22 @@
     <li id="potential-competitors"><a href="#">Potential Competitors</a></li>
     <li id="optimal-location"><a href="#">Optimal Location</a></li>
     <li id="relative-interest"><a href="#">Relative Interest</a></li>
-    <li><a href="#">Supply Recommendation</a></li>
+    <li id="supply-recommendations"><a href="#">Supply Recommendation</a></li>
     <li><a href="#">Contact/Info</a></li>
   </ul>
 </div>
 <script>
   var map;
   var markersArray = [];
+  function getMatch(a, b) {
+    var matches = [];
+    for ( var i = 0; i < a.length; i++ ) {
+        for ( var e = 0; e < b.length; e++ ) {
+            if ( a[i] === b[e] ) matches.push( a[i] );
+        }
+    }
+    return matches;
+  }
   function clearOverlays() {
     for (var i = 0; i < markersArray.length; i++ ) {
       markersArray[i].setMap(null);
@@ -104,36 +113,49 @@
   };
   function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 42.54457119999999, lng: -76.5983802},
-      zoom: 8
-    });
-    $(document).ready(function(){
-        $("#potential-competitors").click(function(){
-            clearOverlays();
-            $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
-                for(var i = 0; i < data["data"].length; i++) {
-                  var marker = new google.maps.Marker({
-                    position: {lat: data["data"][i].geocode.lat, lng: data["data"][i].geocode.lng},
-                    map: map,
-                    title: data["data"][i].name
-                  });
-                  markersArray.push(marker);
-                }
-            });
-        });
-        $("#optimal-location").click(function(){
+    center: {lat: 42.54457119999999, lng: -76.5983802},
+    zoom: 8
+  });
+  $(document).ready(function(){
+      $("#potential-competitors").click(function(){
           clearOverlays();
-          var marker = new google.maps.Marker({
-            position: {lat: 42.54457119999999, lng: -76.5983802},
-            map: map,
-            title: 'Hello World!'
+          $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
+              for(var i = 0; i < data["data"].length; i++) {
+                var marker = new google.maps.Marker({
+                  position: {lat: data["data"][i].geocode.lat, lng: data["data"][i].geocode.lng},
+                  map: map,
+                  title: data["data"][i].name
+                });
+                markersArray.push(marker);
+              }
           });
-          markersArray.push(marker);
+      });
+      $("#optimal-location").click(function(){
+        clearOverlays();
+        var marker = new google.maps.Marker({
+          position: {lat: 42.54457119999999, lng: -76.5983802},
+          map: map,
+          title: 'Area of Least Competition'
         });
-        $("#relative-interest").click(function(){
-          clearOverlays();
-        });
-    });
+        markersArray.push(marker);
+      });
+      $("#relative-interest").click(function(){
+        var userIDs = ["59e344f5ceb8abe24252f856"];
+        for(var i = 0; i < userIDs.length; i++) {
+          $.ajax({
+            url: "https://westus.api.cognitive.microsoft.com/recommendations/v4.0/models/8810bcf5-12c3-4af9-b26f-c09cbf52ca8f/recommend/user?userId=" + userIDs[i] + "&numberOfResults=5",
+            type: "GET",
+            beforeSend: function(xhr){xhr.setRequestHeader('Ocp-Apim-Subscription-Key', '586a2994e7cb4523beb170e60f0954c3');},
+            success: function(data) {
+              $.get("http://api.reimaginebanking.com/merchants/" + data.recommendedItems[0].items[0].id + "?key=faa42463727cc73a03c766e63a424800", function(data, status){
+                  alert(data.name);
+                  alert(data.category);
+              });
+            }
+          })
+        }
+      });
+  });
   }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ1K3jkUOcucg5rPlCO_VLqNtxKKV9QmE&callback=initMap"
