@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+  <meta charset="utf-8">
+  <title>Vis</title>
+  <meta name="author" content="Hustlr Team" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" media="screen" href="style.css">
+  <meta name="viewport" content="initial-scale=1.0">
+  <meta charset="utf-8">
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+      height: 30em;
+      width: 50em;
+      left: 50%;
+      margin-left: -35em;
+      position: absolute;
+      top: 7em;
+    }
+    #background {
+      position: absolute;
+      top: 6.75em;
+      border: 2em solid #0066cc;
+      width: 66em;
+      left: 50%;
+      margin-left: -35.75em;
+      margin-top: -0.5em;
+      height: 27.5em;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <style>
+    #option-menu {
+      position: absolute;
+      top: 7em;
+      left: 50%;
+      margin-left: 15em;
+    }
+
+    #myUL {
+        /* Remove default list styling */
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        margin-top: 1px;
+    }
+
+    #myUL li a {
+        border: 1px solid #ddd; /* Add a border to all links */
+        margin-top: -1px; /* Prevent double borders */
+        background-color: #f6f6f6; /* Grey background color */
+        padding: 12px; /* Add some padding */
+        text-decoration: none; /* Remove default text underline */
+        font-size: 18px; /* Increase the font-size */
+        color: black; /* Add a black text color */
+        display: block; /* Make it into a block element to fill the whole list */
+        width: 15em;
+        height: 3.925em;
+    }
+
+    #myUL li a:hover:not(.header) {
+        background-color: #eee; /* Add a hover effect to all links, except for headers */
+    }
+  </style>
+</head>
+<body>
+
+<!-- particles.js container -->
+<div id="particles-js">
+</div>
+
+<!-- scripts -->
+<script src="particles.min.js"></script>
+<script src="app.js"></script>
+<div id="background"></div>
+<div id="map"></div>
+<div id="option-menu">  
+  <ul id="myUL">
+    <li><a href="#">Potential Competitors</a></li>
+    <li><a href="#">Optimal Location</a></li>
+    <li><a href="#">Relative Interest</a></li>
+    <li><a href="#">Supply Recommendation</a></li>
+    <li><a href="#">Contact/Info</a></li>
+  </ul>
+</div>
+<script>
+  var map;
+  function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: -34.397, lng: 150.644},
+      zoom: 8
+    });
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ1K3jkUOcucg5rPlCO_VLqNtxKKV9QmE&callback=initMap"
+async defer></script>
+
+</body>
+</html>
