@@ -136,7 +136,7 @@
     <ul id="myUL">
       <li id="potential-competitors"><a href="#">Potential Competitors</a></li>
       <li id="optimal-location"><a href="#">Optimal Location</a></li>
-      <li id="relative-interest"><a href="#">Relative Interest</a></li>
+      <li id="relative-interest"><a href="#">Relative Interest<br/><span id="interest"></span></a></li>
       <li id="supply-recommendations"><a href="#">Supply Recommendation</a></li>
       <li><a href="#">Contact/Info</a></li>
     </ul>
@@ -174,6 +174,9 @@ $('.toggle').click(function () {
     }
     return matches;
   }
+  function sigmoid(t) {
+    return 1/(1+Math.pow(Math.E, -t));
+}
   function clearOverlays() {
     for (var i = 0; i < markersArray.length; i++ ) {
       markersArray[i].setMap(null);
@@ -222,7 +225,6 @@ $('.toggle').click(function () {
               }
             }
             var point = preprocessData(competitors, [42.54457119999999,-76.5983802], 7, 1000);
-            alert(point);
             var marker = new google.maps.Marker({
               position: {lat: point[0], lng: point[1]},
               map: map,
@@ -253,7 +255,7 @@ $('.toggle').click(function () {
                   for(var i = 0; i < raw.length; i++) {
                     tags.push(raw[i].getAttribute("data"));
                   }
-                  alert(getMatch(tags, data.category).length / data.category.length);
+                  document.getElementById("interest").innerHTML = sigmoid(5 * getMatch(tags, data.category).length / data.category.length);
               });
             }
           })
