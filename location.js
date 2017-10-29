@@ -54,6 +54,32 @@ function preprocessDataAlt (pointList, center, tries, times) {
 }
 
 function findOptimalPoint (pointList, center, tries, times) {
+	var bestVM = 1000000;
+	var bestPos = [0,0];
+
+	for (i = -10; i < 10; i+=0.01) {
+		for (j = -10; j < 10; j+=0.01) {
+			var validityMeasure = 0;
+
+			for (p = 0; p < pointList.length; p++) {
+				var x = pointList[p][0] - j;
+				var y = pointList[p][1] - i;
+
+				validityMeasure += (x*x + y*y);
+			}
+
+			if (validityMeasure < bestVM) {
+				bestVM = validityMeasure;
+				bestPos = [i,j];
+			}
+		}
+	}
+
+	return bestPos;
+}
+
+
+function findOptimalPoint2 (pointList, center, tries, times) {
 	var bestLong = 0;
 	var bestLat = 0;
 	var posMeasure = 1000000;
@@ -91,8 +117,8 @@ function findOptimalPoint (pointList, center, tries, times) {
 			bound_distance = 10 - center_distance;
 
 			if (center_distance > 5) {
-				forceX -= 1/(center_distance * bound_distance + 0.0001) * pointLong;
-				forceY -= 1/(center_distance * bound_distance + 0.0001) * pointLat;
+				forceX -= 1/(center_distance * bound_distance + 0.0001) * cdisX;
+				forceY -= 1/(center_distance * bound_distance + 0.0001) * cdisY;
 			}
 
 			pointLong += forceX;
@@ -112,11 +138,11 @@ function findOptimalPoint (pointList, center, tries, times) {
 
 data = []
 
-for (i = 0; i < 20; i++) {
-	data.push([10*Math.random() + 50, 10*Math.random() + 70]);
+for (i = -10; i < 10; i++) {
+	data.push([i,i]);
 }
 
-center = [55, 75];
+center = [0, 0];
 
 results = preprocessData(data, center, 10, 500);
 results2 = preprocessData(data, center, 10, 500);
