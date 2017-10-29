@@ -20,12 +20,12 @@
       left: 50%;
       margin-left: -35em;
       position: absolute;
-      top: 7em;
+      top: 5em;
       border: 3px solid white;
     }
     #background {
       position: absolute;
-      top: 6.75em;
+      top: 4.75em;
       border: 2em solid white;
       width: 66em;
       left: 50%;
@@ -44,7 +44,7 @@
   <style>
     #option-menu {
       position: absolute;
-      top: 7em;
+      top: 5em;
       left: 50%;
       margin-left: 15em;
     }
@@ -137,8 +137,8 @@
       <li id="potential-competitors"><a href="#">Potential Competitors</a></li>
       <li id="optimal-location"><a href="#">Optimal Location</a></li>
       <li id="relative-interest"><a href="#">Relative Interest<br/><span id="interest"></span></a></li>
-      <li id="supply-recommendations"><a href="#">Supply Recommendation</a></li>
-      <li><a href="#">Contact/Info</a></li>
+      <li id="supply-recommendations"><a href="#"><input style="border: none;font-size: 14px; font-family: 'Bungee', cursive; color: white; background-color: #3399FF; " type="text" placeholder="Latitude..."></a></li>
+      <li><a href="#"><input style=" border: none; font-size: 14px; font-family: 'Bungee', cursive; color: white; background-color: #3399FF; " type="text" placeholder="Longitude..."></a></li>
     </ul>
   </div>
 <div class="btn-group" style="position: relative;left: 0px;bottom: 100px;" align="center">
@@ -157,6 +157,11 @@
     <li class="toggle" data="liquor_store" style="position: relative; display: inline;"><button>Liquor Store</button></li>
     <li class="toggle" data="department_store" style="position: relative; display: inline;"><button>Department Store</button></li>
     <li class="toggle" data="electronics_store" style="position: relative; display: inline;"><button>Electronics Store</button></li>
+    <li class="toggle" data="clothing" style="position: relative; display: inline;"><button>Clothing</button></li>
+    <li class="toggle" data="lodging" style="position: relative; display: inline;"><button>Lodging</button></li>
+    <li class="toggle" data="health" style="position: relative; display: inline;"><button>Health</button></li>
+    <li class="toggle" data="meal_takeaway" style="position: relative; display: inline;"><button>Meal Takeaway</button></li>
+    <li class="toggle" data="jewelery" style="position: relative; display: inline;"><button>Jewelery</button></li>
   </ul>
 </div>
 <script>
@@ -232,12 +237,6 @@ $('.toggle').click(function () {
             });
             markersArray.push(marker);
         });
-        /*var marker = new google.maps.Marker({
-          position: {lat: 42.54457119999999, lng: -76.5983802},
-          map: map,
-          title: 'Area of Least Competition'
-        });
-        markersArray.push(marker);*/
       });
       $("#relative-interest").click(function(){
         var userIDs = ["59e344f5ceb8abe24252f856"];
