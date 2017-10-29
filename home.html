@@ -10,6 +10,7 @@
   <meta name="viewport" content="initial-scale=1.0">
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="location.js"></script>
   <style>
     /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
@@ -159,15 +160,6 @@
   </ul>
 </div>
 <script>
-  var map;
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 8
-    });
-  }
-</script>
-<script>
 $('.toggle').click(function () {
     $(this).toggleClass('active');
 });
@@ -216,12 +208,34 @@ $('.toggle').click(function () {
       });
       $("#optimal-location").click(function(){
         clearOverlays();
-        var marker = new google.maps.Marker({
+        var raw = document.getElementsByClassName("toggle active");
+        var tags = [];
+        for(var i = 0; i < raw.length; i++) {
+          tags.push(raw[i].getAttribute("data"));
+        }
+        $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
+            var competitors = [];
+            for(var i = 0; i < data["data"].length; i++) {
+              if(getMatch(tags, data["data"][i].category).length > 0) {
+                latlng = [data["data"][i].geocode.lat, data["data"][i].geocode.lng];
+                competitors.push(latlng);
+              }
+            }
+            var point = preprocessData(competitors, [42.54457119999999,-76.5983802], 7, 1000);
+            alert(point);
+            var marker = new google.maps.Marker({
+              position: {lat: point[0], lng: point[1]},
+              map: map,
+              title: "Optimal Location"
+            });
+            markersArray.push(marker);
+        });
+        /*var marker = new google.maps.Marker({
           position: {lat: 42.54457119999999, lng: -76.5983802},
           map: map,
           title: 'Area of Least Competition'
         });
-        markersArray.push(marker);
+        markersArray.push(marker);*/
       });
       $("#relative-interest").click(function(){
         var userIDs = ["59e344f5ceb8abe24252f856"];
@@ -232,8 +246,14 @@ $('.toggle').click(function () {
             beforeSend: function(xhr){xhr.setRequestHeader('Ocp-Apim-Subscription-Key', '586a2994e7cb4523beb170e60f0954c3');},
             success: function(data) {
               $.get("http://api.reimaginebanking.com/merchants/" + data.recommendedItems[0].items[0].id + "?key=faa42463727cc73a03c766e63a424800", function(data, status){
-                  alert(data.name);
-                  alert(data.category);
+                  /*alert(data.name);
+                  alert(data.category);*/
+                  var raw = document.getElementsByClassName("toggle active");
+                  var tags = [];
+                  for(var i = 0; i < raw.length; i++) {
+                    tags.push(raw[i].getAttribute("data"));
+                  }
+                  alert(getMatch(tags, data.category).length / data.category.length);
               });
             }
           })
