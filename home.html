@@ -10,6 +10,7 @@
   <meta name="viewport" content="initial-scale=1.0">
   <meta charset="utf-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="location.js"></script>
   <style>
     /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
@@ -19,12 +20,12 @@
       left: 50%;
       margin-left: -35em;
       position: absolute;
-      top: 5em;
+      top: 7em;
       border: 3px solid white;
     }
     #background {
       position: absolute;
-      top: 4.75em;
+      top: 6.75em;
       border: 2em solid white;
       width: 66em;
       left: 50%;
@@ -43,7 +44,7 @@
   <style>
     #option-menu {
       position: absolute;
-      top: 5em;
+      top: 7em;
       left: 50%;
       margin-left: 15em;
     }
@@ -70,9 +71,6 @@
     }
     #myUL li a:hover:not(.header) {
         background-color: #2d86df; /* Add a hover effect to all links, except for headers */
-    }
-    .btn-group{
-      margin-top: -2em;
     }
     #tags button {
         border: none;
@@ -114,33 +112,23 @@
       background-color: #3399FF;
       color: white;
     }
-    /*.latlong{
-      background-color: white;
-      border: 0.1em solid #3399FF;
-      color: #3399FF;
-      padding: 5px 12px;
-      cursor: pointer;
-      float: left;
-      position: relative;
-      background-color: #3399FF;
-      color: white;
-      font-family: 'Bungee', cursive;
-    }*/
   </style>
 </head>
+<body>
 <!-- particles.js container -->
 <div id="particles-js">
 </div>
+
 <!-- scripts -->
 <script src="particles.min.js"></script>
 <script src="app.js"></script>
 <div id="background">
-  <div id="footer" style="position: absolute; top: 780px;left: 87px; z-index: -99999999;font-size: 45px">
+  <div id="footer" style="position: absolute; top: 720px;left: 87px; z-index: -99999999;font-size: 45px">
     <p style="font-family: 'Bungee', cursive;font-weight: 30px;color: white;size: 30px;">Hustlr Team 2017</p>
   </div>
-  <div id="logo" style="position: absolute; top: 760px; z-index: -99999999;">
-    <img src="hustlr.png" style="width:70px;height:80px;opacity:1;">
-  </div>
+  <div id="logo" style="position: absolute; top: 700px; z-index: -99999999;">
+  <img src="hustlr.png" style="width:70px;height:80px;opacity:1;">
+</div>
 </div>
 <div id="map"></div>
 </div>
@@ -148,48 +136,29 @@
     <ul id="myUL">
       <li id="potential-competitors"><a href="#">Potential Competitors</a></li>
       <li id="optimal-location"><a href="#">Optimal Location</a></li>
-      <li id="relative-interest"><a href="#">Relative Interest</a></li>
-      <li><a href="#"><input style="border: none;font-size: 14px; font-family: 'Bungee', cursive; color: white; background-color: #3399FF; " type="text" placeholder="Latitude..."></a></li>
-      <li><a href="#"><input style=" border: none; font-size: 14px; font-family: 'Bungee', cursive; color: white; background-color: #3399FF; " type="text" placeholder="Longitude..."></a></li>
+      <li id="relative-interest"><a href="#">Relative Interest<br/><span id="interest"></span></a></li>
+      <li id="supply-recommendations"><a href="#">Supply Recommendation</a></li>
+      <li><a href="#">Contact/Info</a></li>
     </ul>
   </div>
 <div class="btn-group" style="position: relative;left: 0px;bottom: 100px;" align="center">
-  <ul style="position: absolute; left: 50%; margin-left: -37.5em; margin-top: -15em">
-    <li class="toggle" style="position: relative; display: inline;" ><button>Cafe</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Bakery</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Restaurant</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Food</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Store</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>P.O.I.</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Establishment</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Home Goods</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Tech</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Bar</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Grocery</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Liquor Store</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Department Store</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Electronics Store</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Clothing</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Lodging</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Health</button></li>
-    <li class="toggle" style="position: relative; display: inline;"><button>Meal Takeaway</button></li>
+  <ul style="position: absolute; left: 50%; margin-left: -37.5em; margin-top: -11em">
+    <li class="toggle" data="cafe" style="position: relative; display: inline;" ><button>Cafe</button></li>
+    <li class="toggle" data="bakery" style="position: relative; display: inline;"><button>Bakery</button></li>
+    <li class="toggle" data="restaurant" style="position: relative; display: inline;"><button>Restaurant</button></li>
+    <li class="toggle" data="food" style="position: relative; display: inline;"><button>Food</button></li>
+    <li class="toggle" data="store" style="position: relative; display: inline;"><button>Store</button></li>
+    <li class="toggle" data="points_of_interest" style="position: relative; display: inline;"><button>P.O.I.</button></li>
+    <li class="toggle" data="establishment" style="position: relative; display: inline;"><button>Establishment</button></li>
+    <li class="toggle" data="home_goods_store" style="position: relative; display: inline;"><button>Home Goods</button></li>
+    <li class="toggle" data="Tech" style="position: relative; display: inline;"><button>Tech</button></li>
+    <li class="toggle" data="bar" style="position: relative; display: inline;"><button>Bar</button></li>
+    <li class="toggle" data="grocery_or_supermarket" style="position: relative; display: inline;"><button>Grocery</button></li>
+    <li class="toggle" data="liquor_store" style="position: relative; display: inline;"><button>Liquor Store</button></li>
+    <li class="toggle" data="department_store" style="position: relative; display: inline;"><button>Department Store</button></li>
+    <li class="toggle" data="electronics_store" style="position: relative; display: inline;"><button>Electronics Store</button></li>
   </ul>
 </div>
-<!-- <div class="latlong">
-  <ul style="position: absolute; left: 10%; margin-left: -37.5em;">
-    <li><input style="position: relative; display: inline;" type="text" placeholder="Longitude..."></li>
-    <li><input style="position: relative; display: inline;" type="text" placeholder="Longitude..."></li>
-  </ul>
-</div> -->
-<script>
-  var map;
-  function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
-      zoom: 8
-    });
-  }
-</script>
 <script>
 $('.toggle').click(function () {
     $(this).toggleClass('active');
@@ -205,6 +174,9 @@ $('.toggle').click(function () {
     }
     return matches;
   }
+  function sigmoid(t) {
+    return 1/(1+Math.pow(Math.E, -t));
+}
   function clearOverlays() {
     for (var i = 0; i < markersArray.length; i++ ) {
       markersArray[i].setMap(null);
@@ -219,25 +191,53 @@ $('.toggle').click(function () {
   $(document).ready(function(){
       $("#potential-competitors").click(function(){
           clearOverlays();
+          var raw = document.getElementsByClassName("toggle active");
+          var tags = [];
+          for(var i = 0; i < raw.length; i++) {
+            tags.push(raw[i].getAttribute("data"));
+          }
           $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
               for(var i = 0; i < data["data"].length; i++) {
-                var marker = new google.maps.Marker({
-                  position: {lat: data["data"][i].geocode.lat, lng: data["data"][i].geocode.lng},
-                  map: map,
-                  title: data["data"][i].name
-                });
-                markersArray.push(marker);
+                if(getMatch(tags, data["data"][i].category).length > 0) {
+                  var marker = new google.maps.Marker({
+                    position: {lat: data["data"][i].geocode.lat, lng: data["data"][i].geocode.lng},
+                    map: map,
+                    title: data["data"][i].name
+                  });
+                  markersArray.push(marker);
+                }
               }
           });
       });
       $("#optimal-location").click(function(){
         clearOverlays();
-        var marker = new google.maps.Marker({
+        var raw = document.getElementsByClassName("toggle active");
+        var tags = [];
+        for(var i = 0; i < raw.length; i++) {
+          tags.push(raw[i].getAttribute("data"));
+        }
+        $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
+            var competitors = [];
+            for(var i = 0; i < data["data"].length; i++) {
+              if(getMatch(tags, data["data"][i].category).length > 0) {
+                latlng = [data["data"][i].geocode.lat, data["data"][i].geocode.lng];
+                competitors.push(latlng);
+              }
+            }
+            var point = preprocessData(competitors, [42.54457119999999,-76.5983802], 7, 1000);
+            var marker = new google.maps.Marker({
+              position: {lat: point[0], lng: point[1]},
+              map: map,
+              title: "Optimal Location"
+            });
+            markersArray.push(marker);
+        });
+        /*var marker = new google.maps.Marker({
           position: {lat: 42.54457119999999, lng: -76.5983802},
           map: map,
           title: 'Area of Least Competition'
         });
-        markersArray.push(marker);
+        markersArray.push(marker);*/
       });
       $("#relative-interest").click(function(){
         var userIDs = ["59e344f5ceb8abe24252f856"];
@@ -248,8 +248,14 @@ $('.toggle').click(function () {
             beforeSend: function(xhr){xhr.setRequestHeader('Ocp-Apim-Subscription-Key', '586a2994e7cb4523beb170e60f0954c3');},
             success: function(data) {
               $.get("http://api.reimaginebanking.com/merchants/" + data.recommendedItems[0].items[0].id + "?key=faa42463727cc73a03c766e63a424800", function(data, status){
-                  alert(data.name);
-                  alert(data.category);
+                  /*alert(data.name);
+                  alert(data.category);*/
+                  var raw = document.getElementsByClassName("toggle active");
+                  var tags = [];
+                  for(var i = 0; i < raw.length; i++) {
+                    tags.push(raw[i].getAttribute("data"));
+                  }
+                  document.getElementById("interest").innerHTML = sigmoid(5 * getMatch(tags, data.category).length / data.category.length);
               });
             }
           })
