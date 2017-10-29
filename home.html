@@ -140,8 +140,8 @@
       <li id="potential-competitors"><a href="#">Potential Competitors</a></li>
       <li id="optimal-location"><a href="#">Optimal Location</a></li>
       <li id="relative-interest"><a href="#">Relative Interest<br/><span id="interest"></span></a></li>
-      <li id="supply-recommendations"><a href="#"><input style="border: none;font-size: 14px; font-family: 'Bungee', cursive; color: white; background-color: #3399FF; " type="text" placeholder="Latitude..."></a></li>
-      <li><a href="#"><input style=" border: none; font-size: 14px; font-family: 'Bungee', cursive; color: white; background-color: #3399FF; " type="text" placeholder="Longitude..."></a></li>
+      <li><a href="#"><input id="lat" value="42.54457119999999" style="border: none;font-size: 14px; font-family: 'Bungee', cursive; color: white; background-color: #3399FF; " type="text" placeholder="Latitude..."><br/><input id="lng" value="-76.5983802" style=" border: none; font-size: 14px; font-family: 'Bungee', cursive; color: white; background-color: #3399FF; " type="text" placeholder="Longitude..."></a></li>
+      <li><a href="#"><input id="st-address" style=" border: none; font-size: 14px; font-family: 'Bungee', cursive; color: white; background-color: #3399FF; " type="text" placeholder="Address (Optional)"></a></li>
     </ul>
   </div>
 <div class="btn-group" style="position: relative;left: 0px;bottom: 100px;" align="center">
@@ -204,7 +204,9 @@ $('.toggle').click(function () {
           for(var i = 0; i < raw.length; i++) {
             tags.push(raw[i].getAttribute("data"));
           }
-          $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
+          latitude = document.getElementById("lat").value;
+          longitude = document.getElementById("lng").value;
+          $.get("http://api.reimaginebanking.com/merchants?lat=" + latitude + "&lng=" + longitude + "&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
               for(var i = 0; i < data["data"].length; i++) {
                 if(getMatch(tags, data["data"][i].category).length > 0) {
                   var marker = new google.maps.Marker({
@@ -224,7 +226,9 @@ $('.toggle').click(function () {
         for(var i = 0; i < raw.length; i++) {
           tags.push(raw[i].getAttribute("data"));
         }
-        $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
+        latitude = document.getElementById("lat").value;
+        longitude = document.getElementById("lng").value;
+        $.get("http://api.reimaginebanking.com/merchants?lat=" + latitude + "&lng=" + longitude + "&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
             var competitors = [];
             for(var i = 0; i < data["data"].length; i++) {
               if(getMatch(tags, data["data"][i].category).length > 0) {
@@ -232,7 +236,7 @@ $('.toggle').click(function () {
                 competitors.push(latlng);
               }
             }
-            var point = preprocessData(competitors, [42.54457119999999,-76.5983802], 7, 1000);
+            var point = preprocessData(competitors, [document.getElementById("lat").value,document.getElementById("lng").value], 7, 1000);
             var marker = new google.maps.Marker({
               position: {lat: point[0], lng: point[1]},
               map: map,
@@ -250,8 +254,6 @@ $('.toggle').click(function () {
             beforeSend: function(xhr){xhr.setRequestHeader('Ocp-Apim-Subscription-Key', '586a2994e7cb4523beb170e60f0954c3');},
             success: function(data) {
               $.get("http://api.reimaginebanking.com/merchants/" + data.recommendedItems[0].items[0].id + "?key=faa42463727cc73a03c766e63a424800", function(data, status){
-                  /*alert(data.name);
-                  alert(data.category);*/
                   var raw = document.getElementsByClassName("toggle active");
                   var tags = [];
                   for(var i = 0; i < raw.length; i++) {
@@ -262,6 +264,13 @@ $('.toggle').click(function () {
             }
           })
         }
+      });
+      $("#st-address").keyup(function(){
+        $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + $(this).value + "&key=AIzaSyDJ1K3jkUOcucg5rPlCO_VLqNtxKKV9QmE", function(data, status){
+              document.getElementById("lat").value = data["results"][0].geometry.location.lat;
+              document.getElementById("lng").value = data["results"][0].geometry.location.lng;
+              console.log(data["results"][0].geometry.location.lat);
+          });
       });
   });
   }
