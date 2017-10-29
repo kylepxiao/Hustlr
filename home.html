@@ -3,7 +3,7 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
   <meta charset="utf-8">
-  <title>Vis</title>
+  <title>Hustlr</title>
   <meta name="author" content="Hustlr Team" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" media="screen" href="style.css">
@@ -20,16 +20,18 @@
       margin-left: -35em;
       position: absolute;
       top: 7em;
+      border: 3px solid white;
     }
     #background {
       position: absolute;
       top: 6.75em;
-      border: 2em solid #0066cc;
+      border: 2em solid white;
       width: 66em;
       left: 50%;
       margin-left: -35.75em;
       margin-top: -0.5em;
       height: 27.5em;
+      opacity: .5;
     }
     /* Optional: Makes the sample page fill the window. */
     html, body {
@@ -45,7 +47,6 @@
       left: 50%;
       margin-left: 15em;
     }
-
     #myUL {
         /* Remove default list styling */
         list-style-type: none;
@@ -54,27 +55,65 @@
         position: absolute;
         margin-top: 1px;
     }
-
     #myUL li a {
-        border: 1px solid #ddd; /* Add a border to all links */
+        border: 3px solid white; /* Add a border to all links */
         margin-top: -1px; /* Prevent double borders */
-        background-color: #f6f6f6; /* Grey background color */
+        margin-bottom: -3.5px;
+        background-color: #3399FF; /* Grey background color */
         padding: 12px; /* Add some padding */
         text-decoration: none; /* Remove default text underline */
         font-size: 18px; /* Increase the font-size */
-        color: black; /* Add a black text color */
+        color: white; /* Add a black text color */
         display: block; /* Make it into a block element to fill the whole list */
         width: 15em;
         height: 3.925em;
     }
-
     #myUL li a:hover:not(.header) {
-        background-color: #eee; /* Add a hover effect to all links, except for headers */
+        background-color: #2d86df; /* Add a hover effect to all links, except for headers */
+    }
+    #tags button {
+        border: none;
+    }
+    .btn-group button {
+    background-color: white; /* Green background */
+    border: 0.1em solid #3399FF; /* Green border */
+    color: #3399FF; /* White text */
+    padding: 5px 12px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    position: relative;
+    bottom: 0;
+    left: 0;
+    font-size: 1em;
+    width: 15em;
+    }
+    .btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+    }
+    .btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+    }
+/* Add a background color on hover */
+    /*.btn-group button: {
+    background-color: #3399FF;
+    color: white;
+    }*/
+    .btn-group button:active {
+    background-color: #3399FF;
+    color: white;
+    }
+    .btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+    }
+    .active button{
+      background-color: #3399FF;
+      color: white;
     }
   </style>
 </head>
 <body>
-
 <!-- particles.js container -->
 <div id="particles-js">
 </div>
@@ -82,62 +121,58 @@
 <!-- scripts -->
 <script src="particles.min.js"></script>
 <script src="app.js"></script>
-<div id="background"></div>
+<div id="background">
+  <div id="footer" style="position: absolute; top: 720px;left: 87px; z-index: -99999999;font-size: 45px">
+    <p style="font-family: 'Bungee', cursive;font-weight: 30px;color: white;size: 30px;">Hustlr Team 2017</p>
+  </div>
+  <div id="logo" style="position: absolute; top: 700px; z-index: -99999999;">
+  <img src="hustlr.png" style="width:70px;height:80px;opacity:1;">
+</div>
+</div>
 <div id="map"></div>
+</div>
 <div id="option-menu">  
   <ul id="myUL">
-    <li id="potential-competitors"><a href="#">Potential Competitors</a></li>
-    <li id="optimal-location"><a href="#">Optimal Location</a></li>
-    <li id="relative-interest"><a href="#">Relative Interest</a></li>
+    <li><a href="#">Potential Competitors</a></li>
+    <li><a href="#">Optimal Location</a></li>
+    <li><a href="#">Relative Interest</a></li>
     <li><a href="#">Supply Recommendation</a></li>
     <li><a href="#">Contact/Info</a></li>
   </ul>
 </div>
+<div class="btn-group" style="position: relative;left: 0px;bottom: 100px;" align="center">
+  <ul style="position: absolute; left: 50%; margin-left: -37.5em; margin-top: -11em">
+    <li class="toggle" style="position: relative; display: inline;" ><button>Cafe</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Bakery</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Restaurant</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Food</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Store</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>P.O.I.</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Establishment</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Home Goods</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Tech</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Bar</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Grocery</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Liquor Store</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Department Store</button></li>
+    <li class="toggle" style="position: relative; display: inline;"><button>Electronics Store</button></li>
+  </ul>
+</div>
 <script>
   var map;
-  var markersArray = [];
-  function clearOverlays() {
-    for (var i = 0; i < markersArray.length; i++ ) {
-      markersArray[i].setMap(null);
-    }
-    markersArray.length = 0;
-  };
   function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 42.54457119999999, lng: -76.5983802},
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: -34.397, lng: 150.644},
       zoom: 8
-    });
-    $(document).ready(function(){
-        $("#potential-competitors").click(function(){
-            clearOverlays();
-            $.get("http://api.reimaginebanking.com/merchants?lat=42.54457119999999&lng=-76.5983802&rad=10&key=faa42463727cc73a03c766e63a424800", function(data, status){
-                for(var i = 0; i < data["data"].length; i++) {
-                  var marker = new google.maps.Marker({
-                    position: {lat: data["data"][i].geocode.lat, lng: data["data"][i].geocode.lng},
-                    map: map,
-                    title: data["data"][i].name
-                  });
-                  markersArray.push(marker);
-                }
-            });
-        });
-        $("#optimal-location").click(function(){
-          clearOverlays();
-          var marker = new google.maps.Marker({
-            position: {lat: 42.54457119999999, lng: -76.5983802},
-            map: map,
-            title: 'Hello World!'
-          });
-          markersArray.push(marker);
-        });
-        $("#relative-interest").click(function(){
-          clearOverlays();
-        });
     });
   }
 </script>
+<script>
+$('.toggle').click(function () {
+    $(this).toggleClass('active');
+});
+</script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ1K3jkUOcucg5rPlCO_VLqNtxKKV9QmE&callback=initMap"
-async defer></script>
-
+async defer ></script>
 </body>
 </html>
