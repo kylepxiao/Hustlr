@@ -21,16 +21,34 @@ function preprocessData (pointList, center, tries, times) {
 	var processedPointList = [];
 
 	for (i = 0; i < pointList.length; i++) {
-		var temp = [(pointList[i][0] - midX) * 70, (pointList[i][1] - midY) * 70];
+		var temp = [(pointList[i][0] - midX) * 69, (pointList[i][1] - midY) * 69];
 		processedPointList.push(temp);
 	}
 
-	newCenter = [(center[0] - midX) * 70, (center[1] - midY) * 70]
+	newCenter = [(center[0] - midX) * 69, (center[1] - midY) * 69]
 
 	var returnValues = findOptimalPoint(processedPointList, newCenter, tries, times);
 
 	returnLong = returnValues[0] / 69.0 + midX;
 	returnLat = returnValues[1] / 69.0 + midY;
+
+	return [returnLong, returnLat];
+}
+
+function preprocessDataAlt (pointList, center, tries, times) {
+	var processedPointList = [];
+
+	for (i = 0; i < pointList.length; i++) {
+		var temp = [(pointList[i][0] - center[0]) * 69, (pointList[i][1] - center[1]) * 69];
+		processedPointList.push(temp);
+	}
+
+	newCenter = [0, 0]
+
+	var returnValues = findOptimalPoint(processedPointList, newCenter, tries, times);
+
+	returnLong = returnValues[0] / 69.0 + center[0];
+	returnLat = returnValues[1] / 69.0 + center[1];
 
 	return [returnLong, returnLat];
 }
@@ -55,8 +73,8 @@ function findOptimalPoint (pointList, center, tries, times) {
 				disX = pointList[p][0] - pointLong;
 				disY = pointList[p][1] - pointLat;
 				if (Math.sqrt(disX*disX + disY*disY) < 10) {
-					forceX -= 0.01/(disX*disX + disY*disY + 0.0001) * disX;
-					forceY -= 0.01/(disX*disX + disY*disY + 0.0001) * disX;
+					forceX -= 0.03/(disX*disX + disY*disY + 0.0001) * disX;
+					forceY -= 0.03/(disX*disX + disY*disY + 0.0001) * disX;
 				}
 
 				if (t == times - 1) {
@@ -92,15 +110,16 @@ function findOptimalPoint (pointList, center, tries, times) {
 }
 
 
+data = []
 
+for (i = 0; i < 20; i++) {
+	data.push([10*Math.random() + 50, 10*Math.random() + 70]);
+}
 
-data1 = [30.14, 30];
-data2 = [29.86, 30];
-data3 = [30, 29.86];
-data4 = [29.86, 30.14];
-data5 = [30.14, 30.14];
+center = [55, 75];
 
-data = [data1, data2, data3, data4, data5];
-center = [30, 30];
+results = preprocessData(data, center, 10, 500);
+results2 = preprocessData(data, center, 10, 500);
 
-results = preprocessData(data, center, 5, 500);
+console.log(results);
+console.log(results2);
