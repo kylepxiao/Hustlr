@@ -6,4 +6,4 @@ A consulting service for entrepreneurs and small business to guage consumer inte
 ![Alt Text](Capture1.PNG)<br/>
 --Main Interface for Clients<br/><br/>
 ![Alt Text](Capture2.PNG)<br/>
---Location-based recommendations<br/>s
+--Location-based recommendations<br/>
